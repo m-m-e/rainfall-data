@@ -29,3 +29,20 @@ export const transformData = (data: RainfallByDate[]) => {
   })
   return newData;
 };
+
+export const getSummaryData = (rainfallData) => {
+  let total = 0;
+  let numberOfDays = 0;
+  let over10Count = 0;
+
+  Object.values(rainfallData).forEach((dateList: DateValue[]) => {
+    dateList.forEach((date: DateValue) => {
+      total += date.value;
+      numberOfDays ++;
+      date.value > 10 && over10Count++;
+    });
+  });
+  const average = Math.floor(total / numberOfDays);
+
+  return { total, average, daysOver10mm: over10Count };
+}

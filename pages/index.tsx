@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from 'react';
-import { transformData } from '../utils/transform-data';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { getSummaryData, transformData } from '../utils/transform-data';
 import Table from './table/Table';
 
 export async function getStaticProps() {
@@ -29,6 +29,12 @@ export default function Index({ rainfallData, transformedRainfallData }) {
       : setDataToDisplay(transformedRainfallData);
   };
 
+  const [summaryData, setSummaryData] = useState(getSummaryData(dataToDisplay));
+
+  useEffect(() => {
+    setSummaryData(getSummaryData(dataToDisplay));
+  }, [dataToDisplay]);
+
   return <>
     <label htmlFor="filterInput">Filter by region: </label>
     <select name="regions" id="filterInput" onChange={e => handleFilter(e)}>
@@ -44,5 +50,12 @@ export default function Index({ rainfallData, transformedRainfallData }) {
       data={rainfallData}
       transformedRainfallData={dataToDisplay}
     />
+
+    <div>
+      <p>Summary</p>
+      <p>Total rainfall: {summaryData.total}</p>
+      <p>Average rainfall: {summaryData.average}</p>
+      <p>Number of consecutive days where rainfall exceeds 10mm: {summaryData.daysOver10mm}</p>
+    </div>
   </>;
 }

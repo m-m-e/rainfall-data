@@ -15,4 +15,10 @@ export interface RainfallData {
 export interface DateValue {
   date: string,
   value: number
-}
+};
+
+export interface RainfallSummary {
+  total: number,
+  average: number,
+  daysOver10mm: number
+};
