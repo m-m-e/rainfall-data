@@ -36,26 +36,35 @@ export default function Index({ rainfallData, transformedRainfallData }) {
   }, [dataToDisplay]);
 
   return <>
-    <label htmlFor="filterInput">Filter by region: </label>
-    <select name="regions" id="filterInput" onChange={e => handleFilter(e)}>
-      <option value="">Please choose a region</option>
-      {
-        Object.keys(transformedRainfallData).map((region: string) => {
-          return <option value={region} key={region}>{region}</option>}
-        )
-      }
-    </select>
+    <h1 className="title">Rainfall</h1>
+    <div className="filter-container">
+      <label htmlFor="filterInput">Filter by region: </label>
+      <select name="regions" id="filterInput" onChange={e => handleFilter(e)}>
+        <option value="">Please choose a region</option>
+        {
+          Object.keys(transformedRainfallData).map((region: string) => {
+            return <option value={region} key={region}>{region}</option>}
+          )
+        }
+      </select>
+    </div>
 
     <Table
       data={rainfallData}
       transformedRainfallData={dataToDisplay}
     />
 
-    <div>
-      <p>Summary</p>
-      <p>Total rainfall: {summaryData.total}</p>
-      <p>Average rainfall: {summaryData.average}</p>
-      <p>Number of consecutive days where rainfall exceeds 10mm: {summaryData.daysOver10mm}</p>
+    <div className="summary-container">
+      <p className="summary-title">Summary</p>
+      <p>Total rainfall:
+        <span className="summary-value"> {summaryData.total}</span>
+      </p>
+      <p>Average rainfall:
+        <span className="summary-value"> {summaryData.average}</span>
+      </p>
+      <p>Number of consecutive days where rainfall exceeds 10mm:
+        <span className="summary-value"> {summaryData.daysOver10mm}</span>
+      </p>
     </div>
   </>;
 }

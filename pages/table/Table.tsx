@@ -13,7 +13,7 @@ const Table = ({ data, transformedRainfallData }) => {
         <tr key={ data[0] + index }>
           <>
             <th scope="row">{data[0]}</th>
-            { data[1].map(cellData => <td key={data[0] + cellData.date}>{cellData.value}</td>) }
+            { data[1].map(cellData => <td key={data[0] + cellData.date} className="table-cell">{cellData.value}</td>) }
           </>
         </tr>
       )
@@ -22,7 +22,7 @@ const Table = ({ data, transformedRainfallData }) => {
   }, [transformedRainfallData]);
   return (
     <table>
-      <caption>Rainfall by region</caption>
+      <caption className="table-caption">Rainfall by region</caption>
       <thead>
         <tr>
           <th scope="col">Region Name</th>
