@@ -7,14 +7,18 @@ export async function getStaticProps() {
 
   return {
     props: {
-      rainfallData: transformData(data)
+      rainfallData: data,
+      transformedRainfallData: transformData(data),
     }
   };
 }
 
-export default function Index({ rainfallData }) {
+export default function Index({ rainfallData, transformedRainfallData }) {
 
   return <>
-    <Table data={rainfallData}/>
+    <Table
+      data={rainfallData}
+      transformedRainfallData={transformedRainfallData}
+    />
   </>;
 }

@@ -1,8 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { transformDate } from "../../utils/date-utils";
+import { RainfallByDate } from "../models/rainfall.model";
 
-const Table = ({ data }) => {
+const Table = ({ data, transformedRainfallData }) => {
+  const [dates, setDates] = useState([]);
+  const [tableData, setTableData] = useState([]);
+
   useEffect(() => {
-    console.log('data', data);
+    setDates(data.map((date: RainfallByDate) => transformDate(date.date)));
+    const rowData = Object.entries(transformedRainfallData).map((data: [region: string, data: {date: string, value: number}[]], index) => {
+      return (
+        <tr key={ data[0] + index }>
+          <>
+            <th scope="row">{data[0]}</th>
+            { data[1].map(cellData => <td key={data[0] + cellData.date}>{cellData.value}</td>) }
+          </>
+        </tr>
+      )
+    })
+    setTableData(rowData);
   }, []);
   return (
     <table>
@@ -10,18 +26,13 @@ const Table = ({ data }) => {
       <thead>
         <tr>
           <th scope="col">Region Name</th>
-          <th scope="col">Date 1</th>
-          <th scope="col">Date 2</th>
-          <th scope="col">Date 3</th>
+          {
+            dates.map((date, index) => <th scope="col" key={index + '-' + date}>{ date }</th>)
+          }
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">Region 1</th>
-          <td>date 1 data</td>
-          <td>date 2 data</td>
-          <td>date 3 data</td>
-        </tr>
+          { tableData }
       </tbody>
     </table>
   )
