@@ -19,7 +19,7 @@ const Table = ({ data, transformedRainfallData }) => {
       )
     })
     setTableData(rowData);
-  }, []);
+  }, [transformedRainfallData]);
   return (
     <table>
       <caption>Rainfall by region</caption>
